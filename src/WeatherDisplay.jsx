@@ -8,9 +8,10 @@ import theme from './theme';
 
 const WeatherDisplay = ({ temperature, description, descriptionId }) => (
   <Container>
+    {/* TODO: icon name selector is unsafe. Wrap in utility function? */}
     <WeatherIcons name={iconMap[descriptionId].icon} size="4x" />
     <div>
-      <h1>{Math.round(temperature).toFixed(1)}&deg;</h1>
+      <h1>{temperature.toFixed(1)}&deg;</h1>
       <em>{description}</em>
     </div>
   </Container>

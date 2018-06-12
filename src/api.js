@@ -8,6 +8,7 @@ export const getWeatherFromLatLng = async (lat, lng) => {
       `weather?lat=${lat}&lon=${lng}&units=metric` +
       `&APPID=${openWeatherMapKey}`);
   const data = await resp.json();
+  console.log(data);
   return {
     temperature: data.main.temp,
     descriptionId: data.weather[0].id,

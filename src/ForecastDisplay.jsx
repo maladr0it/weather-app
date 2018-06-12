@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { ResponsiveContainer, AreaChart, XAxis, YAxis, Tooltip, Area } from 'recharts';
+import { ResponsiveContainer, AreaChart, XAxis, Tooltip, Area } from 'recharts';
 
 import WeatherDisplay from './WeatherDisplay';
 import theme from './theme';
 
 const ForecastDisplay = ({ periods, offset }) => {
-  console.log(periods);
-
-  const data = periods
+  const chartData = periods
     // only show the next 24 hours
     .filter(period => period.time < Date.now() + 24 * 60 * 60 * 1000)
     .map(period => ({
@@ -20,14 +18,14 @@ const ForecastDisplay = ({ periods, offset }) => {
 
   return (
     <ResponsiveContainer width="100%" height={200}>
-      <AreaChart data={data}>
+      <AreaChart data={chartData}>
         <defs>
           <linearGradient id="temperature" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor={theme.strongPink} stopOpacity={0.8} />
             <stop offset="95%" stopColor={theme.strongPink} stopOpacity={0} />
           </linearGradient>
         </defs>
-        <XAxis dataKey="hour" interval="preserveStartEnd" />
+        <XAxis dataKey="hour" interval="preserveStartEnd" tickMargin={10} />
         <Tooltip content={<CustomTooltip />} />
         <Area
           type="monotone"

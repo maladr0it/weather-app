@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import FontAwesome from 'react-fontawesome';
 
 import {
   getLatLngFromPlaceId,
@@ -7,14 +8,14 @@ import {
   getForecastFromLatLng,
   getUTCOffsetFromLatLng,
 } from './api';
-import CityAutoComplete from './CityAutoComplete';
-import WeatherDisplay from './WeatherDisplay';
-import ForecastDisplay from './ForecastDisplay';
+import CityAutoComplete from './CityAutocomplete';
+import Report from './Report';
 import theme from './theme';
 
 class App extends Component {
   state = {
-    loaded: false,
+    loading: false,
+    hydrated: false,
     weather: null,
     forecast: null,
     utcOffset: 0,
@@ -30,35 +31,38 @@ class App extends Component {
     console.log('setting new state:', weather);
 
     this.setState({
-      loaded: true,
+      loading: false,
+      hydrated: true,
       placeId,
       weather,
       forecast,
       utcOffset,
     });
   };
-  handleCitySelected = (placeId) => {
+  handleCitySelected = (locationName, placeId) => {
     // set state, then make api call
-    this.setState({ loaded: false }, () => this.getWeatherData(placeId));
+    this.setState({ locationName, loading: true }, () => this.getWeatherData(placeId));
   };
   refresh = () => {
     // set state, then make api call
-    this.setState({ loaded: false }, () => this.getWeatherData(this.state.placeId));
+    this.setState({ loading: true }, () => this.getWeatherData(this.state.placeId));
   };
   render() {
     return (
       <Container>
         {/* <button onClick={() => console.log(this.state)}>PEEK_STATE</button> */}
-        <button onClick={() => this.refresh()}>REFRESH</button>
         <CityAutoComplete handleSelect={this.handleCitySelected} />
-        {this.state.loaded ? (
-          <React.Fragment>
-            <WeatherDisplay {...this.state.weather} />
-            <ForecastDisplay periods={this.state.forecast} offset={this.state.utcOffset} />
-          </React.Fragment>
-        ) : (
-          <div>LOADIN lul</div>
-        )}
+        {this.state.loading && <FontAwesome name="spinner" />}
+        {this.state.hydrated &&
+          !this.state.loading && (
+            <Report
+              locationName={this.state.locationName}
+              weather={this.state.weather}
+              forecast={this.state.forecast}
+              handleRefresh={this.refresh}
+              utcOffset={this.state.utcOffset}
+            />
+          )}
       </Container>
     );
   }
@@ -68,11 +72,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   max-width: 40rem;
   margin: auto;
   color: ${theme.gray27};
-
   background: ${theme.offWhite};
+  height: 100%;
 `;
 
 export default App;

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
 import theme from './theme';
 
-class CityAutoComplete extends Component {
+class CityAutocomplete extends Component {
   state = {
     input: '',
   };
@@ -15,9 +16,9 @@ class CityAutoComplete extends Component {
   };
   handleSelect = async (description, placeId) => {
     this.setState({
-      input: description,
+      input: '',
     });
-    this.props.handleSelect(placeId);
+    this.props.handleSelect(description, placeId);
   };
   render() {
     return (
@@ -30,7 +31,7 @@ class CityAutoComplete extends Component {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps }) => (
           <Container>
-            <SearchInput {...getInputProps({ placeholder: 'Search a city...' })} />
+            <SearchInput {...getInputProps({ autoFocus: true, placeholder: 'Search a city...' })} />
             <SuggestionListContainer>
               <SuggestionList>
                 {suggestions.map(suggestion => (
@@ -46,10 +47,14 @@ class CityAutoComplete extends Component {
     );
   }
 }
+
+CityAutocomplete.propTypes = {
+  handleSelect: PropTypes.func.isRequired,
+};
+
 const Container = styled.div`
   display: flex;
   max-width: 15rem;
-  margin: auto;
   flex-direction: column;
   align-items: center;
 `;
@@ -69,8 +74,7 @@ const SuggestionListContainer = styled.div`
 const SuggestionList = styled.div`
   width: 100%;
   position: absolute;
-  // outline: 1px solid ${theme.gray27};
-  // opacity: 0.8;
+  opacity: 0.9;
 `;
 const Suggestion = styled.div`
   white-space: nowrap;
@@ -80,4 +84,4 @@ const Suggestion = styled.div`
   color: ${theme.gray27};
 `;
 
-export default CityAutoComplete;
+export default CityAutocomplete;
