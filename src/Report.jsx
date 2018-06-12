@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import FontAwesome from 'react-fontawesome';
 
 import WeatherDisplay from './WeatherDisplay';
@@ -39,10 +39,19 @@ Report.propTypes = {
   handleRefresh: PropTypes.func.isRequired,
 };
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 const Summary = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: ${fadeIn} 1s linear;
 `;
 const IconButton = styled.button`
   border: none;

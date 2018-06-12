@@ -1,5 +1,6 @@
 import { geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
 
+// WARNING: should be set as .env variables in production
 const openWeatherMapKey = '5ea6693fa6526dbdc50d2b5041249682';
 const googleMapsKey = 'AIzaSyALNcAbAoUpA6VMCb1xhReW28Xg5jak6EY';
 
@@ -8,7 +9,6 @@ export const getWeatherFromLatLng = async (lat, lng) => {
       `weather?lat=${lat}&lon=${lng}&units=metric` +
       `&APPID=${openWeatherMapKey}`);
   const data = await resp.json();
-  console.log(data);
   return {
     temperature: data.main.temp,
     descriptionId: data.weather[0].id,

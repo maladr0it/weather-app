@@ -57,6 +57,7 @@ const Container = styled.div`
   max-width: 15rem;
   flex-direction: column;
   align-items: center;
+  padding: 5px;
 `;
 const SearchInput = styled.input`
   font-size: 1rem;

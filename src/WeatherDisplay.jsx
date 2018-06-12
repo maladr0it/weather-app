@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import WeatherIcons from 'react-weathericons';
 
 import iconMap from './iconMap';
-import theme from './theme';
 
 const WeatherDisplay = ({ temperature, description, descriptionId }) => (
   <Container>
