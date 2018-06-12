@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Tooltip, Area } from 'recharts';
 
@@ -6,11 +7,13 @@ import WeatherDisplay from './WeatherDisplay';
 import theme from './theme';
 
 const ForecastDisplay = ({ periods, offset }) => {
+  console.log(periods);
+
   const data = periods
     // only show the next 24 hours
     .filter(period => period.time < Date.now() + 24 * 60 * 60 * 1000)
     .map(period => ({
-      // apply UTC offset to get the local time
+      // apply UTC offset to display time local to that region
       hour: new Date(period.time + offset).toISOString().slice(11, 16),
       ...period,
     }));
@@ -38,7 +41,19 @@ const ForecastDisplay = ({ periods, offset }) => {
   );
 };
 
-const CustomTooltip = ({ label, payload }) => {
+const periodShape = PropTypes.shape({
+  time: PropTypes.number.isRequired,
+  temperature: PropTypes.number.isRequired,
+  descriptionId: PropTypes.number.isRequired,
+  description: PropTypes.string.isRequired,
+});
+
+ForecastDisplay.propTypes = {
+  periods: PropTypes.arrayOf(periodShape).isRequired,
+  offset: PropTypes.number.isRequired,
+};
+
+const CustomTooltip = ({ payload }) => {
   const data = payload[0] && payload[0].payload;
   return (
     <React.Fragment>
@@ -46,22 +61,26 @@ const CustomTooltip = ({ label, payload }) => {
       {null}
       {data && (
         <TooltipContainer>
-          <h3>{label}</h3>
-
           <WeatherDisplay {...data} />
         </TooltipContainer>
-        // <TooltipContainer>
-        //   <h3>{data.hour}</h3>
-        //   <p>{data.temperature}&deg;</p>
-        // </TooltipContainer>
       )}
     </React.Fragment>
   );
 };
 
+CustomTooltip.propTypes = {
+  payload: PropTypes.arrayOf(PropTypes.shape({
+    payload: periodShape,
+  })),
+};
+CustomTooltip.defaultProps = {
+  payload: null,
+};
+
 const TooltipContainer = styled.div`
   opacity: 0.8;
-  background: ${theme.strongPink};
+  padding: 0 5px 0 5px
+  background: ${theme.gray27};
   color: ${theme.offWhite};
 `;
 

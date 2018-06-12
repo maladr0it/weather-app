@@ -7,13 +7,13 @@ import iconMap from './iconMap';
 import theme from './theme';
 
 const WeatherDisplay = ({ temperature, description, descriptionId }) => (
-  <React.Fragment>
-    <Summary>
+  <Container>
+    <WeatherIcons name={iconMap[descriptionId].icon} size="4x" />
+    <div>
       <h1>{Math.round(temperature).toFixed(1)}&deg;</h1>
-      <WeatherIcons name={iconMap[descriptionId].icon} size="4x" />
-    </Summary>
-    <em>{description}</em>
-  </React.Fragment>
+      <em>{description}</em>
+    </div>
+  </Container>
 );
 WeatherDisplay.propTypes = {
   temperature: PropTypes.number.isRequired,
@@ -21,12 +21,14 @@ WeatherDisplay.propTypes = {
   descriptionId: PropTypes.number.isRequired,
 };
 
-const Summary = styled.div`
-  overflow: true;
-  padding: 5px;
+const Container = styled.div`
   display: flex;
+  padding: 1rem 0 1rem 0; // make room for overflowing icons
   justify-content: center;
   align-items: center;
+  & * {
+    margin: 5px;
+  }
 `;
 
 export default WeatherDisplay;

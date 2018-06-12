@@ -19,7 +19,7 @@ class App extends Component {
     forecast: null,
     utcOffset: 0,
   };
-  handleCitySelected = async (placeId) => {
+  getWeatherData = async (placeId) => {
     const { lat, lng } = await getLatLngFromPlaceId(placeId);
     // load in parallel
     const [weather, forecast, utcOffset] = await Promise.all([
@@ -27,21 +27,37 @@ class App extends Component {
       getForecastFromLatLng(lat, lng),
       getUTCOffsetFromLatLng(lat, lng),
     ]);
+    console.log('setting new state:', weather);
+
     this.setState({
       loaded: true,
+      placeId,
       weather,
       forecast,
       utcOffset,
     });
   };
+  handleCitySelected = (placeId) => {
+    // set state, then make api call
+    this.setState({ loaded: false }, () => this.getWeatherData(placeId));
+  };
+  refresh = () => {
+    // set state, then make api call
+    this.setState({ loaded: false }, () => this.getWeatherData(this.state.placeId));
+  };
   render() {
     return (
       <Container>
-        <button onClick={() => console.log(this.state)}>PEEK_STATE</button>
+        {/* <button onClick={() => console.log(this.state)}>PEEK_STATE</button> */}
+        <button onClick={() => this.refresh()}>REFRESH</button>
         <CityAutoComplete handleSelect={this.handleCitySelected} />
-        {this.state.loaded && <WeatherDisplay {...this.state.weather} />}
-        {this.state.loaded && (
-          <ForecastDisplay periods={this.state.forecast} offset={this.state.utcOffset} />
+        {this.state.loaded ? (
+          <React.Fragment>
+            <WeatherDisplay {...this.state.weather} />
+            <ForecastDisplay periods={this.state.forecast} offset={this.state.utcOffset} />
+          </React.Fragment>
+        ) : (
+          <div>LOADIN lul</div>
         )}
       </Container>
     );
