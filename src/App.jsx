@@ -1,44 +1,62 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import WeatherIcons from 'react-weathericons';
 
-import { getWeatherFromLatLng, getLatLngFromPlaceId } from './api';
-import theme from './theme';
-
+import {
+  getLatLngFromPlaceId,
+  getWeatherFromLatLng,
+  getForecastFromLatLng,
+  getUTCOffsetFromLatLng,
+} from './api';
 import CityAutoComplete from './CityAutoComplete';
-
-const googleMapsKey = 'AIzaSyALNcAbAoUpA6VMCb1xhReW28Xg5jak6EY';
-const openWeatherKey = '5ea6693fa6526dbdc50d2b5041249682';
+import WeatherDisplay from './WeatherDisplay';
+import ForecastDisplay from './ForecastDisplay';
+import theme from './theme';
 
 class App extends Component {
   state = {
-    weather: { temperature: '-1000' },
+    loaded: false,
+    weather: null,
+    forecast: null,
+    utcOffset: 0,
   };
   handleCitySelected = async (placeId) => {
     const { lat, lng } = await getLatLngFromPlaceId(placeId);
-    const weather = await getWeatherFromLatLng(lat, lng);
+    // load in parallel
+    const [weather, forecast, utcOffset] = await Promise.all([
+      getWeatherFromLatLng(lat, lng),
+      getForecastFromLatLng(lat, lng),
+      getUTCOffsetFromLatLng(lat, lng),
+    ]);
     this.setState({
+      loaded: true,
       weather,
+      forecast,
+      utcOffset,
     });
   };
   render() {
     return (
-      <div>
-        <WeatherDisplay>{this.state.weather.temperature}</WeatherDisplay>
+      <Container>
+        <button onClick={() => console.log(this.state)}>PEEK_STATE</button>
         <CityAutoComplete handleSelect={this.handleCitySelected} />
-        <div>test</div>
-        <WeatherIcons name="cloud" />
-      </div>
+        {this.state.loaded && <WeatherDisplay {...this.state.weather} />}
+        {this.state.loaded && (
+          <ForecastDisplay periods={this.state.forecast} offset={this.state.utcOffset} />
+        )}
+      </Container>
     );
   }
 }
 
-const WeatherDisplay = styled.div`
-  display: block;
-  width: 50px;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 40rem;
   margin: auto;
-  background: red;
-  color: pink;
+  color: ${theme.gray27};
+
+  background: ${theme.offWhite};
 `;
 
 export default App;
