@@ -10,6 +10,7 @@ import {
 import CityAutoComplete from './CityAutocomplete';
 import Report from './Report';
 import LoadingSpinner from './LoadingSpinner';
+import ErrorMessage from './ErrorMessage';
 import theme from './theme';
 
 class App extends Component {
@@ -70,7 +71,7 @@ class App extends Component {
           <Content>
             {/* TODO: design a less brittle loading/error state */}
             {this.state.loading && <LoadingSpinner size="2x" />}
-            {this.state.error && !this.state.loading && <div>ERROR LUL</div>}
+            {this.state.error && !this.state.loading && <ErrorMessage />}
             {this.state.hydrated &&
               !this.state.loading &&
               !this.state.error && (
@@ -92,7 +93,7 @@ class App extends Component {
 const Background = styled.div`
   width: 100%;
   height: 100%;
-  background: ${theme.offWhite};
+  background: linear-gradient(white, ${theme.skyBlue});
 `;
 const Container = styled.div`
   display: flex;

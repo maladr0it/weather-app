@@ -62,8 +62,10 @@ const Container = styled.div`
 const SearchInput = styled.input`
   font-size: 1rem;
   width: 100%
-  background: ${theme.offWhite};
-  border: 5px solid ${theme.strongPink};
+  background: white;
+  border-radius: 5px;
+  border: 1px solid ${theme.gray27};
+  padding: 5px;
   color: ${theme.gray27};
 `;
 // to allow suggestions to overlap the app
@@ -81,7 +83,7 @@ const Suggestion = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  background: ${props => (props.active ? theme.pink : 'white')};
+  background: ${props => (props.active ? theme.sunYellow : 'white')};
   color: ${theme.gray27};
 `;
 

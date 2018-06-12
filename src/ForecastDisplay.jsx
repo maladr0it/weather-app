@@ -21,8 +21,8 @@ const ForecastDisplay = ({ periods, offset }) => {
       <AreaChart data={chartData}>
         <defs>
           <linearGradient id="temperature" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor={theme.strongPink} stopOpacity={0.8} />
-            <stop offset="95%" stopColor={theme.strongPink} stopOpacity={0} />
+            <stop offset="5%" stopColor={theme.sunYellow} stopOpacity={0.8} />
+            <stop offset="95%" stopColor={theme.sunYellow} stopOpacity={0.0} />
           </linearGradient>
         </defs>
         <XAxis dataKey="hour" interval="preserveStartEnd" tickMargin={10} />
@@ -30,7 +30,7 @@ const ForecastDisplay = ({ periods, offset }) => {
         <Area
           type="monotone"
           dataKey="temperature"
-          stroke={theme.strongPink}
+          stroke={theme.sunYellow}
           fillOpacity={1}
           fill="url(#temperature)"
         />
@@ -79,7 +79,7 @@ const TooltipContainer = styled.div`
   opacity: 0.8;
   padding: 0 5px 0 5px
   background: ${theme.gray27};
-  color: ${theme.offWhite};
+  color: white;
 `;
 
 export default ForecastDisplay;
