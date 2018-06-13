@@ -7,7 +7,7 @@ import {
   getForecastFromLatLng,
   getUTCOffsetFromLatLng,
 } from './api';
-import CityAutoComplete from './CityAutocomplete';
+import CityAutocomplete from './CityAutocomplete';
 import Report from './Report';
 import LoadingSpinner from './LoadingSpinner';
 import ErrorMessage from './ErrorMessage';
@@ -67,7 +67,7 @@ class App extends Component {
       <Background>
         <Container>
           {/* <button onClick={() => console.log(this.state)}>PEEK_STATE</button> */}
-          <CityAutoComplete handleSelect={this.handleCitySelected} />
+          <CityAutocomplete handleSelect={this.handleCitySelected} />
           <Content>
             {/* TODO: design a less brittle loading/error state */}
             {this.state.loading && <LoadingSpinner size="2x" />}
