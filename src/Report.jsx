@@ -3,19 +3,21 @@ import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 import FontAwesome from 'react-fontawesome';
 
-import WeatherDisplay from './WeatherDisplay';
+import WeatherSummary from './WeatherSummary';
 import ForecastDisplay from './ForecastDisplay';
 
 const Report = ({
   locationName, weather, forecast, utcOffset, handleRefresh,
 }) => (
   <React.Fragment>
-    <h2>{locationName}</h2>
-    <Summary>
-      <WeatherDisplay {...weather} />
+    <LocationName>
+      {locationName}{' '}
       <IconButton onClick={() => handleRefresh()}>
         <FontAwesome name="sync" />
       </IconButton>
+    </LocationName>
+    <Summary>
+      <WeatherSummary {...weather} />
     </Summary>
     <ForecastDisplay periods={forecast} offset={utcOffset} />
   </React.Fragment>
@@ -48,10 +50,11 @@ const fadeIn = keyframes`
   }
 `;
 const Summary = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   animation: ${fadeIn} 1s linear;
+`;
+const LocationName = styled.h1`
+  margin-top: 0;
+  text-align: center;
 `;
 const IconButton = styled.button`
   border: none;

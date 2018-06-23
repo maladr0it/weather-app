@@ -5,7 +5,7 @@ import WeatherIcons from 'react-weathericons';
 
 import iconMap from './iconMap';
 
-const WeatherDisplay = ({ temperature, description, descriptionId }) => (
+const WeatherTooltip = ({ temperature, description, descriptionId }) => (
   <Container>
     {/* TODO: icon name selector is unsafe. Wrap in utility function? */}
     <WeatherIcons name={iconMap[descriptionId].icon} size="4x" />
@@ -15,7 +15,7 @@ const WeatherDisplay = ({ temperature, description, descriptionId }) => (
     </div>
   </Container>
 );
-WeatherDisplay.propTypes = {
+WeatherTooltip.propTypes = {
   temperature: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
   descriptionId: PropTypes.number.isRequired,
@@ -31,4 +31,4 @@ const Container = styled.div`
   }
 `;
 
-export default WeatherDisplay;
+export default WeatherTooltip;

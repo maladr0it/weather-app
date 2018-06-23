@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ResponsiveContainer, AreaChart, XAxis, Tooltip, Area } from 'recharts';
 
-import WeatherDisplay from './WeatherDisplay';
+import WeatherTooltip from './WeatherTooltip';
 import theme from './theme';
 
 const ForecastDisplay = ({ periods, offset }) => {
@@ -17,20 +17,22 @@ const ForecastDisplay = ({ periods, offset }) => {
     }));
 
   return (
-    <ResponsiveContainer width="100%" height={200}>
-      <AreaChart data={chartData}>
+    <ResponsiveContainer width="100%" height={260}>
+      <AreaChart data={chartData} margin={{ top: 60 }}>
         <defs>
-          <linearGradient id="temperature" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor={theme.sunYellow} stopOpacity={0.8} />
-            <stop offset="95%" stopColor={theme.sunYellow} stopOpacity={0.0} />
-          </linearGradient>
+          <linearGradient id="temperature" x1="0" y1="0" x2="0" y2="1" />
         </defs>
-        <XAxis dataKey="hour" interval="preserveStartEnd" tickMargin={10} />
+        <XAxis
+          dataKey="hour"
+          interval="preserveStartEnd"
+          tickMargin={10}
+          stroke={theme.eggshellBlue}
+        />
         <Tooltip content={<CustomTooltip />} />
         <Area
           type="monotone"
           dataKey="temperature"
-          stroke={theme.sunYellow}
+          stroke={theme.salmon}
           fillOpacity={1}
           fill="url(#temperature)"
         />
@@ -59,7 +61,7 @@ const CustomTooltip = ({ payload }) => {
       {null}
       {data && (
         <TooltipContainer>
-          <WeatherDisplay {...data} />
+          <WeatherTooltip {...data} />
         </TooltipContainer>
       )}
     </React.Fragment>
@@ -76,9 +78,10 @@ CustomTooltip.defaultProps = {
 };
 
 const TooltipContainer = styled.div`
+  border-radius: 5px;
   opacity: 0.8;
   padding: 0 5px 0 5px
-  background: ${theme.gray27};
+  background: ${theme.grayBlue};
   color: white;
 `;
 

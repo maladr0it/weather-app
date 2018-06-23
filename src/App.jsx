@@ -93,7 +93,8 @@ class App extends Component {
 const Background = styled.div`
   width: 100%;
   height: 100%;
-  background: linear-gradient(white, ${theme.skyBlue});
+  background: ${theme.prussianBlue};
+  // background: linear-gradient(white, ${theme.skyBlue});
 `;
 const Container = styled.div`
   display: flex;
@@ -101,7 +102,8 @@ const Container = styled.div`
   align-items: center;
   max-width: 40rem;
   margin: auto;
-  color: ${theme.gray27};
+  color: ${theme.eggshellBlue};
+  // color: ${theme.gray27};
   height: 100%;
 `;
 const Content = styled.div`

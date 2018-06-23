@@ -57,16 +57,19 @@ const Container = styled.div`
   max-width: 15rem;
   flex-direction: column;
   align-items: center;
-  padding: 5px;
+  padding-top: 2rem;
+  position: relative;
 `;
 const SearchInput = styled.input`
   font-size: 1rem;
   width: 100%
   background: white;
   border-radius: 5px;
-  border: 1px solid ${theme.gray27};
   padding: 5px;
   color: ${theme.gray27};
+  &:focus {
+    outline: 2px solid ${theme.salmon};
+  }
 `;
 // to allow suggestions to overlap the app
 const SuggestionListContainer = styled.div`
@@ -80,11 +83,15 @@ const SuggestionList = styled.div`
   opacity: 0.9;
 `;
 const Suggestion = styled.div`
+  cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  background: ${props => (props.active ? theme.sunYellow : 'white')};
-  color: ${theme.gray27};
+  background: ${props => (props.active ? theme.salmon : 'white')};
+  // color: ${theme.gray27};
+  color: ${props => (props.active ? 'white' : theme.gray27)};
+  padding: 0 7px;
+  margin: 0 -7px;
 `;
 
 export default CityAutocomplete;
