@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import WeatherIcons from 'react-weathericons';
 
@@ -16,6 +17,12 @@ const WeatherSummary = ({ temperature, description, descriptionId }) => (
     <Description>{description}</Description>
   </React.Fragment>
 );
+
+WeatherSummary.propTypes = {
+  temperature: PropTypes.number.isRequired,
+  description: PropTypes.string.isRequired,
+  descriptionId: PropTypes.number.isRequired,
+};
 
 const Hero = styled.div`
   display: flex;
