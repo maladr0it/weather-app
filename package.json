@@ -10,7 +10,7 @@
     "react-places-autocomplete": "^7.1.2",
     "react-scripts": "1.1.4",
     "react-weathericons": "^1.0.4",
-    "recharts": "^1.0.0-beta.10",
+    "recharts": "^1.5.0",
     "styled-components": "^3.3.2"
   },
   "scripts": {
