@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import PlacesAutocomplete from 'react-places-autocomplete';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import PlacesAutocomplete from "react-places-autocomplete";
 
-import theme from './theme';
+import theme from "./theme";
 
 class CityAutocomplete extends Component {
   state = {
-    input: '',
+    input: ""
   };
-  handleChange = (input) => {
+  handleChange = input => {
     this.setState({
-      input,
+      input
     });
   };
   handleSelect = async (description, placeId) => {
     this.setState({
-      input: '',
+      input: ""
     });
     this.props.handleSelect(description, placeId);
   };
@@ -26,16 +26,24 @@ class CityAutocomplete extends Component {
         value={this.state.input}
         onChange={this.handleChange}
         onSelect={this.handleSelect}
-        searchOptions={{ types: ['(cities)'] }}
+        searchOptions={{ types: ["(cities)"] }}
         highlightFirstSuggestion
       >
         {({ getInputProps, suggestions, getSuggestionItemProps }) => (
           <Container>
-            <SearchInput {...getInputProps({ autoFocus: true, placeholder: 'Search a city...' })} />
+            <SearchInput
+              {...getInputProps({
+                autoFocus: true,
+                placeholder: "Search a city..."
+              })}
+            />
             <SuggestionListContainer>
               <SuggestionList>
                 {suggestions.map(suggestion => (
-                  <Suggestion active={suggestion.active} {...getSuggestionItemProps(suggestion)}>
+                  <Suggestion
+                    active={suggestion.active}
+                    {...getSuggestionItemProps(suggestion)}
+                  >
                     <span>{suggestion.description}</span>
                   </Suggestion>
                 ))}
@@ -49,7 +57,7 @@ class CityAutocomplete extends Component {
 }
 
 CityAutocomplete.propTypes = {
-  handleSelect: PropTypes.func.isRequired,
+  handleSelect: PropTypes.func.isRequired
 };
 
 const Container = styled.div`
@@ -62,7 +70,7 @@ const Container = styled.div`
 `;
 const SearchInput = styled.input`
   font-size: 1rem;
-  width: 100%
+  width: 100%;
   background: white;
   border-radius: 5px;
   padding: 5px;
@@ -87,9 +95,9 @@ const Suggestion = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  background: ${props => (props.active ? theme.salmon : 'white')};
+  background: ${props => (props.active ? theme.salmon : "white")};
   // color: ${theme.gray27};
-  color: ${props => (props.active ? 'white' : theme.gray27)};
+  color: ${props => (props.active ? "white" : theme.gray27)};
   padding: 0 7px;
   margin: 0 -7px;
 `;

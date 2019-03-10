@@ -1,11 +1,12 @@
 # Paidy weather-app assignment
 
+<img src="./sample_media/weather-app--demo.gif" height="400px" />
+
 ## Installation
 
 > npm install
 
 > npm run
-
 
 ## Summary
 
